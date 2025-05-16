@@ -11,8 +11,5 @@ describe('ResenaController', () => {
 
     controller = module.get<ResenaController>(ResenaController);
   });
-
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+  
 });

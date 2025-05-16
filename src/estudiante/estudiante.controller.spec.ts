@@ -12,7 +12,7 @@ describe('EstudianteController', () => {
     controller = module.get<EstudianteController>(EstudianteController);
   });
 
-  it('should be defined', () => {
+  it('definido', () => {
     expect(controller).toBeDefined();
   });
 });

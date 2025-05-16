@@ -12,7 +12,7 @@ describe('ResenaService', () => {
     service = module.get<ResenaService>(ResenaService);
   });
 
-  it('should be defined', () => {
+  it('definido', () => {
     expect(service).toBeDefined();
   });
 });

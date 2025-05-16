@@ -12,7 +12,7 @@ describe('ActividadController', () => {
     controller = module.get<ActividadController>(ActividadController);
   });
 
-  it('should be defined', () => {
+  it('debería estar definido', () => {
     expect(controller).toBeDefined();
   });
 });

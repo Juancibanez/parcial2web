@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Estudiante } from './estudiante.entity';
@@ -14,16 +18,20 @@ export class EstudianteService {
     private actividadRepository: Repository<Actividad>,
   ) {}
 
-  // Crear un estudiante con validaciones
-  async crearEstudiante(estudianteData: Partial<Estudiante>): Promise<Estudiante> {
-    // Validate required fields
+  async crearEstudiante(
+    estudianteData: Partial<Estudiante>,
+  ): Promise<Estudiante> {
     if (!estudianteData.correo) {
       throw new BadRequestException('El correo es obligatorio');
     }
     if (!this.isEmailValid(estudianteData.correo)) {
       throw new BadRequestException('Correo inválido');
     }
-    if (estudianteData.semestre == null || estudianteData.semestre < 1 || estudianteData.semestre > 10) {
+    if (
+      estudianteData.semestre == null ||
+      estudianteData.semestre < 1 ||
+      estudianteData.semestre > 10
+    ) {
       throw new BadRequestException('Semestre debe estar entre 1 y 10');
     }
 
@@ -41,7 +49,10 @@ export class EstudianteService {
     return estudiante;
   }
 
-  async inscribirseActividad(estudianteId: number, actividadId: number): Promise<string> {
+  async inscribirseActividad(
+    estudianteId: number,
+    actividadId: number,
+  ): Promise<string> {
     const estudiante = await this.findEstudianteById(estudianteId);
     const actividad = await this.actividadRepository.findOne({
       where: { id: actividadId },
@@ -49,15 +60,18 @@ export class EstudianteService {
     });
 
     if (!actividad) throw new NotFoundException('Actividad no encontrada');
-    if (actividad.estado !== 0) throw new BadRequestException('Actividad no disponible');
-    if (actividad.estudiantes.length >= actividad.cupoMaximo) {
+    if (actividad.estado !== 0) {
+      throw new BadRequestException('Actividad no disponible');
+    }
+
+    if (actividad.inscritos.length >= actividad.cupoMaximo) {
       throw new BadRequestException('No hay cupos disponibles');
     }
-    if (actividad.estudiantes.some(e => e.id === estudiante.id)) {
+    if (actividad.inscritos.some((e) => e.id === estudiante.id)) {
       throw new BadRequestException('Estudiante ya inscrito');
     }
 
-    actividad.estudiantes.push(estudiante);
+    actividad.inscritos.push(estudiante);
     await this.actividadRepository.save(actividad);
 
     return 'Inscripción exitosa';

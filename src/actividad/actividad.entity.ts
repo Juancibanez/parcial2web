@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  OneToMany,
+} from 'typeorm';
 import { Estudiante } from '../estudiante/estudiante.entity';
 import { Resena } from '../resena/resena.entity';
 
@@ -19,10 +25,9 @@ export class Actividad {
   @Column()
   estado: number;
 
-  @ManyToMany(() => Estudiante, estudiante => estudiante.actividades)
-  estudiantes: Estudiante[];
+  @ManyToMany(() => Estudiante, (estudiante) => estudiante.actividades)
+  inscritos: Estudiante[];
 
-  @OneToMany(() => Resena, resena => resena.actividad)
+  @OneToMany(() => Resena, (resena) => resena.actividad)
   resenas: Resena[];
 }
-

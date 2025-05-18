@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Actividad } from './actividad.entity';
@@ -23,17 +27,27 @@ export class ActividadService {
   async cambiarEstado(id: number, nuevoEstado: number): Promise<Actividad> {
     const actividad = await this.actividadRepository.findOne({
       where: { id },
-      relations: ['estudiantes'],
+      relations: ['inscritos'],
     });
 
     if (!actividad) throw new NotFoundException('Actividad no encontrada');
 
-    if (nuevoEstado === 1 && actividad.estudiantes.length / actividad.cupoMaximo < 0.8) {
-      throw new BadRequestException('Solo se puede cerrar si al menos el 80% del cupo está lleno');
+    if (
+      nuevoEstado === 1 &&
+      actividad.inscritos.length / actividad.cupoMaximo < 0.8
+    ) {
+      throw new BadRequestException(
+        'Solo se puede cerrar si al menos el 80% del cupo está lleno',
+      );
     }
 
-    if (nuevoEstado === 2 && actividad.estudiantes.length < actividad.cupoMaximo) {
-      throw new BadRequestException('Solo se puede finalizar si no hay cupos disponibles');
+    if (
+      nuevoEstado === 2 &&
+      actividad.inscritos.length < actividad.cupoMaximo
+    ) {
+      throw new BadRequestException(
+        'Solo se puede finalizar si no hay cupos disponibles',
+      );
     }
 
     if (![0, 1, 2].includes(nuevoEstado)) {

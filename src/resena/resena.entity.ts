@@ -13,9 +13,12 @@ export class Resena {
   @Column()
   calificacion: number;
 
-  @ManyToOne(() => Estudiante, estudiante => estudiante.resenas)
+  @Column()
+  fecha: string;
+
+  @ManyToOne(() => Estudiante, (estudiante) => estudiante.resenas)
   estudiante: Estudiante;
 
-  @ManyToOne(() => Actividad, actividad => actividad.resenas)
+  @ManyToOne(() => Actividad, (actividad) => actividad.resenas)
   actividad: Actividad;
 }

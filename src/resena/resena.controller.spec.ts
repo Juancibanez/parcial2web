@@ -11,5 +11,4 @@ describe('ResenaController', () => {
 
     controller = module.get<ResenaController>(ResenaController);
   });
-  
 });

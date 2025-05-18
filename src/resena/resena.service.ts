@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Resena } from './resena.entity';
@@ -21,7 +25,7 @@ export class ResenaService {
   async agregarResena(
     estudianteId: number,
     actividadId: number,
-    data: { comentario: string; calificacion: number; fecha: string }
+    data: { comentario: string; calificacion: number; fecha: string },
   ): Promise<Resena> {
     const estudiante = await this.estudianteRepository.findOne({
       where: { id: estudianteId },
@@ -38,12 +42,18 @@ export class ResenaService {
     if (!actividad) throw new NotFoundException('Actividad no encontrada');
 
     if (actividad.estado !== 2) {
-      throw new BadRequestException('Solo se pueden reseñar actividades finalizadas');
+      throw new BadRequestException(
+        'Solo se pueden reseñar actividades finalizadas',
+      );
     }
 
-    const estaInscrito = actividad.estudiantes.some(e => e.id === estudiante.id);
+    const estaInscrito = actividad.inscritos.some(
+      (e) => e.id === estudiante.id,
+    );
     if (!estaInscrito) {
-      throw new BadRequestException('El estudiante no estuvo inscrito en esta actividad');
+      throw new BadRequestException(
+        'El estudiante no estuvo inscrito en esta actividad',
+      );
     }
 
     const nuevaResena = this.resenaRepository.create({

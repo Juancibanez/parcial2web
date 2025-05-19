@@ -8,7 +8,7 @@ export class Resena {
   id: number;
 
   @Column()
-  contenido: string;
+  comentario: string;
 
   @Column()
   calificacion: number;

@@ -1,12 +1,12 @@
-import {
-  Injectable,
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Actividad } from './actividad.entity';
 import { CreateActividadDto } from './dto/create-actividad.dto'; // Import the DTO
+import {
+  BusinessError,
+  BusinessLogicException,
+} from 'src/shared/errors/business-errors';
 
 @Injectable()
 export class ActividadService {
@@ -30,14 +30,19 @@ export class ActividadService {
       relations: ['inscritos'],
     });
 
-    if (!actividad) throw new NotFoundException('Actividad no encontrada');
+    if (!actividad)
+      throw new BusinessLogicException(
+        'Actividad no encontrada',
+        BusinessError.NOT_FOUND,
+      );
 
     if (
       nuevoEstado === 1 &&
       actividad.inscritos.length / actividad.cupoMaximo < 0.8
     ) {
-      throw new BadRequestException(
+      throw new BusinessLogicException(
         'Solo se puede cerrar si al menos el 80% del cupo está lleno',
+        BusinessError.PRECONDITION_FAILED,
       );
     }
 
@@ -45,13 +50,17 @@ export class ActividadService {
       nuevoEstado === 2 &&
       actividad.inscritos.length < actividad.cupoMaximo
     ) {
-      throw new BadRequestException(
+      throw new BusinessLogicException(
         'Solo se puede finalizar si no hay cupos disponibles',
+        BusinessError.PRECONDITION_FAILED,
       );
     }
 
     if (![0, 1, 2].includes(nuevoEstado)) {
-      throw new BadRequestException('Estado no válido');
+      throw new BusinessLogicException(
+        'Estado no válido',
+        BusinessError.BAD_REQUEST,
+      );
     }
 
     actividad.estado = nuevoEstado;

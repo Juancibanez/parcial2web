@@ -22,7 +22,7 @@ export class Actividad {
   @Column()
   cupoMaximo: number;
 
-  @Column()
+  @Column({ default: 0 })
   estado: number;
 
   @ManyToMany(() => Estudiante, (estudiante) => estudiante.actividades)

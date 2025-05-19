@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Actividad } from './actividad.entity';
-import { CreateActividadDto } from './dto/create-actividad.dto'; // Import the DTO
 import {
   BusinessError,
   BusinessLogicException,
@@ -15,11 +14,8 @@ export class ActividadService {
     private actividadRepository: Repository<Actividad>,
   ) {}
 
-  async crearActividad(data: CreateActividadDto): Promise<Actividad> {
-    const nuevaActividad = this.actividadRepository.create({
-      ...data,
-      estado: 0,
-    });
+  async crearActividad(actividad: Actividad): Promise<Actividad> {
+    const nuevaActividad = this.actividadRepository.create(actividad);
 
     return this.actividadRepository.save(nuevaActividad);
   }

@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "2719feaa-5b41-49f0-b921-fe671a0e35f5",
+		"name": "Actividades",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29254193"
+	},
+	"item": [
+		{
+			"name": "Crear una actividad",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\": \"Un titulo largo\",\r\n    \"fecha\": \"2025-05-18T20:50:00.000Z\",\r\n    \"cupoMaximo\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/actividades",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"actividades"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear una actividad",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Un titulo largo\",\r\n    \"fecha\": \"2025-05-18T20:50:00.000Z\",\r\n    \"cupoMaximo\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/actividades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"actividades"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Cambiar estado de una actividad",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nuevoEstado\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/actividades/1/cambiarEstado",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"actividades",
+						"1",
+						"cambiarEstado"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Cambiar estado de una actividad",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nuevoEstado\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/actividades/1/cambiarEstado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"actividades",
+								"1",
+								"cambiarEstado"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Encontrar todas las actividades para una fecha",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/actividades/2025-05-18T20:50:00.000Z",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"actividades",
+						"2025-05-18T20:50:00.000Z"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Encontrar todas las actividades para una fecha",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/actividades/2025-05-18T20:50:00.000Z",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"actividades",
+								"2025-05-18T20:50:00.000Z"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}

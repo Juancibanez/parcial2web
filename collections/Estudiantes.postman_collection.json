@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "bf3a59dd-0a67-4ae0-b96b-64044cb935b2",
+		"name": "Estudiantes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29254193"
+	},
+	"item": [
+		{
+			"name": "Crear un estudiante",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cedula\": 1,\r\n    \"nombre\": \"Juancibanez\",\r\n    \"correo\": \"juanci@gmail.com\",\r\n    \"programa\": \"Sistemas\",\r\n    \"semestre\": 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/estudiantes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"estudiantes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear un estudiante",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cedula\": 1,\r\n    \"nombre\": \"Juancibanez\",\r\n    \"correo\": \"juanci@gmail.com\",\r\n    \"programa\": \"Sistemas\",\r\n    \"semestre\": 8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/estudiantes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"estudiantes"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Encontrar un estudiante por su id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/estudiantes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"estudiantes",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Encontrar un estudiante por su id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/estudiantes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"estudiantes",
+								"1"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Inscripción a una actividad",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/estudiantes/1/inscribir/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"estudiantes",
+						"1",
+						"inscribir",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Inscripción a una actividad",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/estudiantes/1/inscribir/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"estudiantes",
+								"1",
+								"inscribir",
+								"1"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}

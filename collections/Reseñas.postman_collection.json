@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "8f53610e-3262-44e3-b9bc-41b268cb574b",
+		"name": "Reseñas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29254193"
+	},
+	"item": [
+		{
+			"name": "Crear una reseña",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comentario\": \"Gran actividad\",\r\n    \"calificacion\": 1,\r\n    \"fecha\": \"2025-05-19T20:50:00.000Z\",\r\n    \"estudiante\": {\r\n        \"id\": 1\r\n    },\r\n    \"actividad\": {\r\n        \"id\": 1\r\n    }\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/resenas/1/actividad/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"resenas",
+						"1",
+						"actividad",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear una reseña",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comentario\": \"Gran actividad\",\r\n    \"calificacion\": 1,\r\n    \"fecha\": \"2025-05-19T20:50:00.000Z\",\r\n    \"estudiante\": {\r\n        \"id\": 1\r\n    },\r\n    \"actividad\": {\r\n        \"id\": 1\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/resenas/1/actividad/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"resenas",
+								"1",
+								"actividad",
+								"1"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}

@@ -7,7 +7,7 @@ import { Actividad } from '../actividad/actividad.entity';
 import {
   BusinessError,
   BusinessLogicException,
-} from 'src/shared/errors/business-errors';
+} from '../shared/errors/business-errors';
 
 @Injectable()
 export class ResenaService {

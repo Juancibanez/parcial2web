@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UseInterceptors,
 } from '@nestjs/common';
 import { ActividadService } from './actividad.service';
@@ -23,7 +24,7 @@ export class ActividadController {
     return this.actividadService.crearActividad(actividad);
   }
 
-  @Post(':actividadId/cambiarEstado')
+  @Put(':actividadId/cambiarEstado')
   async cambiarEstado(
     @Param('actividadId') actividadId: number,
     @Body('nuevoEstado') nuevoEstado: number,

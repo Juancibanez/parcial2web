@@ -62,14 +62,11 @@ export class EstudianteService {
     return estudiante;
   }
 
-  async inscribirseActividad(
-    estudianteId: number,
-    actividadId: number,
-  ): Promise<string> {
+  async inscribirseActividad(estudianteId: number, actividadId: number) {
     const estudiante = await this.findEstudianteById(estudianteId);
     const actividad = await this.actividadRepository.findOne({
       where: { id: actividadId },
-      relations: ['estudiantes'],
+      relations: ['inscritos'],
     });
 
     if (!actividad)
@@ -102,7 +99,7 @@ export class EstudianteService {
     actividad.inscritos.push(estudiante);
     await this.actividadRepository.save(actividad);
 
-    return 'Inscripción exitosa';
+    return { message: 'Inscripción exitosa' };
   }
 
   private isEmailValid(email: string): boolean {

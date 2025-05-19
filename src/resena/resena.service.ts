@@ -40,7 +40,7 @@ export class ResenaService {
 
     const actividad = await this.actividadRepository.findOne({
       where: { id: actividadId },
-      relations: ['estudiantes'],
+      relations: ['inscritos'],
     });
 
     if (!actividad)

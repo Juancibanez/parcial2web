@@ -6,7 +6,6 @@ import { Estudiante } from '../estudiante/estudiante.entity';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { faker } from '@faker-js/faker';
-import { BusinessLogicException } from 'src/shared/errors/business-errors';
 
 describe('ActividadService', () => {
   let service: ActividadService;
@@ -86,8 +85,11 @@ describe('ActividadService', () => {
     });
 
     it('debería lanzar excepción si menos del 80% del cupo está lleno al cerrar', async () => {
-      await expect(service.cambiarEstado(actividad.id, 1)).rejects.toThrow(
-        BusinessLogicException,
+      await expect(
+        service.cambiarEstado(actividad.id, 1),
+      ).rejects.toHaveProperty(
+        'message',
+        'Solo se puede cerrar si al menos el 80% del cupo está lleno',
       );
     });
 
@@ -129,20 +131,24 @@ describe('ActividadService', () => {
       actividad.inscritos = estudiantes;
       await actividadRepository.save(actividad);
 
-      await expect(service.cambiarEstado(actividad.id, 2)).rejects.toThrow(
-        BusinessLogicException,
+      await expect(
+        service.cambiarEstado(actividad.id, 2),
+      ).rejects.toHaveProperty(
+        'message',
+        'Solo se puede finalizar si no hay cupos disponibles',
       );
     });
 
     it('debería lanzar excepción si el estado es inválido', async () => {
-      await expect(service.cambiarEstado(actividad.id, 5)).rejects.toThrow(
-        BusinessLogicException,
-      );
+      await expect(
+        service.cambiarEstado(actividad.id, 5),
+      ).rejects.toHaveProperty('message', 'Estado no válido');
     });
 
     it('debería lanzar excepción si la actividad no existe', async () => {
-      await expect(service.cambiarEstado(9999, 1)).rejects.toThrow(
-        BusinessLogicException,
+      await expect(service.cambiarEstado(9999, 1)).rejects.toHaveProperty(
+        'message',
+        'Actividad no encontrada',
       );
     });
   });

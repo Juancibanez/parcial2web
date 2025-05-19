@@ -1,13 +1,13 @@
-import {
-  Injectable,
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Resena } from './resena.entity';
 import { Estudiante } from '../estudiante/estudiante.entity';
 import { Actividad } from '../actividad/actividad.entity';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from 'src/shared/errors/business-errors';
 
 @Injectable()
 export class ResenaService {
@@ -32,18 +32,27 @@ export class ResenaService {
       relations: ['actividades'],
     });
 
-    if (!estudiante) throw new NotFoundException('Estudiante no encontrado');
+    if (!estudiante)
+      throw new BusinessLogicException(
+        'Estudiante no encontrado',
+        BusinessError.NOT_FOUND,
+      );
 
     const actividad = await this.actividadRepository.findOne({
       where: { id: actividadId },
       relations: ['estudiantes'],
     });
 
-    if (!actividad) throw new NotFoundException('Actividad no encontrada');
+    if (!actividad)
+      throw new BusinessLogicException(
+        'Actividad no encontrada',
+        BusinessError.NOT_FOUND,
+      );
 
     if (actividad.estado !== 2) {
-      throw new BadRequestException(
-        'Solo se pueden reseñar actividades finalizadas',
+      throw new BusinessLogicException(
+        'La actividad no ha sido finalizada',
+        BusinessError.PRECONDITION_FAILED,
       );
     }
 
@@ -51,8 +60,9 @@ export class ResenaService {
       (e) => e.id === estudiante.id,
     );
     if (!estaInscrito) {
-      throw new BadRequestException(
-        'El estudiante no estuvo inscrito en esta actividad',
+      throw new BusinessLogicException(
+        'El estudiante no está inscrito en la actividad',
+        BusinessError.PRECONDITION_FAILED,
       );
     }
 

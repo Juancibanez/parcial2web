@@ -1,12 +1,12 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Estudiante } from './estudiante.entity';
 import { Actividad } from '../actividad/actividad.entity';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from 'src/shared/errors/business-errors';
 
 @Injectable()
 export class EstudianteService {
@@ -22,17 +22,26 @@ export class EstudianteService {
     estudianteData: Partial<Estudiante>,
   ): Promise<Estudiante> {
     if (!estudianteData.correo) {
-      throw new BadRequestException('El correo es obligatorio');
+      throw new BusinessLogicException(
+        'El correo es obligatorio',
+        BusinessError.BAD_REQUEST,
+      );
     }
     if (!this.isEmailValid(estudianteData.correo)) {
-      throw new BadRequestException('Correo inválido');
+      throw new BusinessLogicException(
+        'El correo no es válido',
+        BusinessError.PRECONDITION_FAILED,
+      );
     }
     if (
       estudianteData.semestre == null ||
       estudianteData.semestre < 1 ||
       estudianteData.semestre > 10
     ) {
-      throw new BadRequestException('Semestre debe estar entre 1 y 10');
+      throw new BusinessLogicException(
+        'El semestre debe estar entre 1 y 10',
+        BusinessError.PRECONDITION_FAILED,
+      );
     }
 
     const estudiante = this.estudianteRepository.create(estudianteData);
@@ -45,7 +54,11 @@ export class EstudianteService {
       relations: ['actividades'],
     });
 
-    if (!estudiante) throw new NotFoundException('Estudiante no encontrado');
+    if (!estudiante)
+      throw new BusinessLogicException(
+        'Estudiante no encontrado',
+        BusinessError.NOT_FOUND,
+      );
     return estudiante;
   }
 
@@ -59,16 +72,31 @@ export class EstudianteService {
       relations: ['estudiantes'],
     });
 
-    if (!actividad) throw new NotFoundException('Actividad no encontrada');
+    if (!actividad)
+      throw new BusinessLogicException(
+        'Actividad no encontrada',
+        BusinessError.NOT_FOUND,
+      );
+
     if (actividad.estado !== 0) {
-      throw new BadRequestException('Actividad no disponible');
+      throw new BusinessLogicException(
+        'Actividad no disponible',
+        BusinessError.PRECONDITION_FAILED,
+      );
     }
 
     if (actividad.inscritos.length >= actividad.cupoMaximo) {
-      throw new BadRequestException('No hay cupos disponibles');
+      throw new BusinessLogicException(
+        'No hay cupos disponibles',
+        BusinessError.PRECONDITION_FAILED,
+      );
     }
+
     if (actividad.inscritos.some((e) => e.id === estudiante.id)) {
-      throw new BadRequestException('Estudiante ya inscrito');
+      throw new BusinessLogicException(
+        'El estudiante ya está inscrito en esta actividad',
+        BusinessError.PRECONDITION_FAILED,
+      );
     }
 
     actividad.inscritos.push(estudiante);
